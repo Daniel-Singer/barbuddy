@@ -1,10 +1,6 @@
-import { useForm } from "@mantine/form";
-import { type ItemCreate } from "../../../schemas/zodItem";
-
 import {
   Group,
   MultiSelect,
-  NumberInput,
   SimpleGrid,
   Stack,
   Text,
@@ -14,10 +10,11 @@ import SaveButton from "../../buttons/SaveButton";
 import UnitSelect from "../common/UnitSelect";
 import PlusButton from "../../buttons/PlusButton";
 import FormWrapper from "../common/FormWrapper";
-import TrashButton from "../../buttons/TrashButton";
+import { ItemFormProvider, useItemForm } from "./context";
+import ItemVariantDesktop from "./ItemVariantDesktop";
 
 const ItemFormDesktop = () => {
-  const form = useForm<ItemCreate>({
+  const form = useItemForm({
     initialValues: {
       name: "",
       categories: [],
@@ -58,61 +55,31 @@ const ItemFormDesktop = () => {
   };
   return (
     <FormWrapper>
-      <form
-        onSubmit={form.onSubmit(
-          (values) => console.log("Form values:", values),
-          (errors) => console.error("Form errors:", errors)
-        )}
-      >
-        <Stack>
-          <TextInput label={"Bezeichnung"} {...form.getInputProps("name")} />
-          <MultiSelect
-            label="Kategorie"
-            {...form.getInputProps("categories")}
-          />
-          <UnitSelect form={form} field="unit" />
-          <Group justify="space-between">
-            <Text c={"blue"}>Varianten</Text>
-            <PlusButton onClick={addNewVariant} />
-          </Group>
-          {form.getValues().variants.map((_variant, index) => (
-            <Stack key={`variant_${index}`}>
-              <SimpleGrid cols={2}>
-                <TextInput
-                  label="Bezeichnung"
-                  {...form.getInputProps(`variants.${index}.name`)}
-                />
-                <NumberInput
-                  label="Menge"
-                  min={0}
-                  step={0.1}
-                  {...form.getInputProps(`variants.${index}.servingSize`)}
-                />
-                <NumberInput
-                  label="Einkaufspreis Brutto"
-                  {...form.getInputProps(`variants.${index}.purchase.price`)}
-                />
-                <NumberInput
-                  label="Steuersatz"
-                  {...form.getInputProps(`variants.${index}.purchase.taxRate`)}
-                />
-                <NumberInput
-                  label="Verkaufspreis Brutto"
-                  {...form.getInputProps(`variants.${index}.sell.price`)}
-                />
-                <NumberInput
-                  label="Steuersatz"
-                  {...form.getInputProps(`variants.${index}.sell.taxRate`)}
-                />
-                <TrashButton
-                  onClick={() => form.removeListItem("variants", index)}
-                ></TrashButton>
-              </SimpleGrid>
-            </Stack>
-          ))}
-          <SaveButton>Speichern</SaveButton>
-        </Stack>
-      </form>
+      <ItemFormProvider form={form}>
+        <form
+          onSubmit={form.onSubmit(
+            (values) => console.log("Form values:", values),
+            (errors) => console.error("Form errors:", errors)
+          )}
+        >
+          <Stack>
+            <TextInput label={"Bezeichnung"} {...form.getInputProps("name")} />
+            <SimpleGrid cols={2}>
+              <MultiSelect
+                label="Kategorie"
+                {...form.getInputProps("categories")}
+              />
+              <UnitSelect form={form} field="unit" />
+            </SimpleGrid>
+            <Group justify="space-between">
+              <Text c={"blue"}>Varianten</Text>
+              <PlusButton onClick={addNewVariant} />
+            </Group>
+            <ItemVariantDesktop />
+            <SaveButton>Speichern</SaveButton>
+          </Stack>
+        </form>
+      </ItemFormProvider>
     </FormWrapper>
   );
 };

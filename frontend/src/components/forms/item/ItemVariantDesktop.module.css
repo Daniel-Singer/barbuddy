@@ -1,0 +1,5 @@
+.variant {
+    background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-7));
+    padding: var(--mantine-spacing-md);
+    border-radius: var(--mantine-radius-md);
+}
