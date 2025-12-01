@@ -1,11 +1,7 @@
 import ItemFormDesktop from "../forms/item/ItemFormDesktop";
 
 const ItemsPageNew = () => {
-  return (
-    <div>
-      <ItemFormDesktop />
-    </div>
-  );
+  return <ItemFormDesktop />;
 };
 
 export default ItemsPageNew;
