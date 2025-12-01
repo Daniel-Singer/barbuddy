@@ -25,6 +25,10 @@ const itemSchema = new Schema(
       type: String,
       default: 'EUR',
     },
+    unit: {
+      type: Schema.Types.ObjectId,
+      ref: 'Unit',
+    },
     active: {
       type: Boolean,
       default: true,
