@@ -1,23 +1,26 @@
 import { Button, type ButtonProps } from "@mantine/core";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 
-interface Props extends ButtonProps {
+type Props = {
   onClick?: () => void;
   children: string;
-  type?: "submit" | "button" | "reset" | undefined;
-}
+  buttonProps?: ButtonProps & {
+    type?: "submit" | "button" | "reset" | undefined;
+  };
+};
 const SaveButton = ({
   children,
-  color = "green",
   onClick,
-  type = "submit",
+  buttonProps = {
+    color: "green",
+    type: "submit",
+  },
 }: Props) => {
   return (
     <Button
       leftSection={<IconDeviceFloppy size={20} />}
-      color={color}
+      {...buttonProps}
       onClick={onClick}
-      type={type}
     >
       {children.toUpperCase()}
     </Button>

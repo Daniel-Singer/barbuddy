@@ -8,7 +8,7 @@ import { theme } from "./theme";
 
 const App = () => {
   return (
-    <MantineProvider theme={theme}>
+    <MantineProvider theme={theme} forceColorScheme="light">
       <ModalsProvider>
         <Stack h={"100%"} gap={0} w={"100%"}>
           <MainNav />

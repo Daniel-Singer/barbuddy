@@ -1,22 +1,25 @@
 import { Button, type ButtonProps } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 
-interface Props extends ButtonProps {
-  onClick: () => void;
+type Props = {
   children: string;
-}
+  onClick?: () => void;
+  buttonProps?: ButtonProps;
+};
+
 const AddButton = ({
   children,
-  color = "green",
   onClick,
-  size = "md",
+  buttonProps = {
+    color: "green",
+    size: "md",
+  },
 }: Props) => {
   return (
     <Button
       leftSection={<IconPlus size={20} />}
-      color={color}
       onClick={onClick}
-      size={size}
+      {...buttonProps}
     >
       {children.toUpperCase()}
     </Button>
