@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { listAvailableItems } from "../../../queries/itemQueries";
-import OrderItem from "../../order/OrderItem";
+import OrderItem from "./OrderItem";
 
 const OrderForm = () => {
   const { data: items } = useQuery({

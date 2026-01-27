@@ -2,7 +2,7 @@ import { makeAutoObservable } from "mobx";
 import type { TItem } from "../types/Item";
 import { convertCentsToEuros } from "../utils/currency";
 
-type OrderedItem = {
+export type OrderedItem = {
   name: string;
   amount: number;
   total: number;
@@ -13,6 +13,7 @@ class OrderStore {
   private _items: Record<string, OrderedItem> = {};
   private _total: number = 0;
   private _totalDeposit = 0;
+  private _chargedDepositCount = 0;
 
   constructor() {
     makeAutoObservable(this, undefined, {
@@ -32,8 +33,17 @@ class OrderStore {
     return convertCentsToEuros(this._totalDeposit);
   }
 
+  get depositCount() {
+    return this._chargedDepositCount;
+  }
+
   addItemToOrder(item: TItem) {
     const { id, name, price, deposit } = item;
+
+    if (deposit) {
+      this._chargedDepositCount += 1;
+    }
+
     if (!this._items[id]) {
       this._items = {
         ...this._items,
@@ -64,6 +74,7 @@ class OrderStore {
     this._items = {};
     this._total = 0;
     this._totalDeposit = 0;
+    this._chargedDepositCount = 0;
   }
 }
 

@@ -1,7 +1,7 @@
 import { Group, Paper, Stack, Text } from "@mantine/core";
-import type { TItem } from "../../types/Item";
-import { convertCentsToEuros } from "../../utils/currency";
-import { orderStore } from "../../stores/orderStore";
+import type { TItem } from "../../../types/Item";
+import { convertCentsToEuros } from "../../../utils/currency";
+import { orderStore } from "../../../stores/orderStore";
 
 type Props = {
   item: TItem;

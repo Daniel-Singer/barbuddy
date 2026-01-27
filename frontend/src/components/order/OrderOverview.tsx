@@ -1,49 +1,35 @@
-import { Group, Paper, Stack, Text } from "@mantine/core";
+import { Divider, Paper, Stack } from "@mantine/core";
 import { orderStore } from "../../stores/orderStore";
-import { convertCentsToEuros } from "../../utils/currency";
 
 import { observer } from "mobx-react-lite";
 import MakePaymentButton from "../buttons/MakePaymentButton";
 import OpenCalculatorButton from "../buttons/OpenCalculatorButton";
+import OrderSum from "./OrderSum";
+import ListItem from "./ListItem";
 
 const OrderOverview = observer(() => {
-  const { orderTotal, orderedItems, resetOrder, totalDeposits } = orderStore;
+  const { orderedItems, resetOrder } = orderStore;
 
   const handleMakePayment = () => {
     resetOrder();
   };
   return (
-    <Paper shadow="sm" p={"md"}>
-      <Stack>
+    <Paper w={300} h={"100%"}>
+      <Stack gap={0} h={"100%"} justify="space-between">
         <Stack gap={0}>
-          <Group justify="space-between">
-            <Text size="xl" fw={600}>
-              SUMME
-            </Text>
-            <Text size="xl" fw={600}>{`${orderTotal} €`}</Text>
-          </Group>
-          <Group justify="space-between">
-            <Text size="sm" c={"dimmed"}>
-              Davon Einsatz
-            </Text>
-            <Text size="sm" c={"dimmed"}>
-              {`${totalDeposits} €`}
-            </Text>
-          </Group>
+          <OrderSum />
+          <Divider />
+          {orderedItems?.map((item) => (
+            <ListItem key={item.name} item={item} />
+          ))}
         </Stack>
-        {orderedItems?.map(({ name, amount, total, deposit }) => (
-          <Group>
-            <Text>{amount}</Text>
-            <Text>{name}</Text>
-            <Text>{convertCentsToEuros(total)}</Text>
-            {deposit && <Text>{convertCentsToEuros(deposit)}</Text>}
-          </Group>
-        ))}
 
-        <MakePaymentButton onClick={handleMakePayment}>
-          Abschliessen
-        </MakePaymentButton>
-        <OpenCalculatorButton>Rechner</OpenCalculatorButton>
+        <Stack>
+          <MakePaymentButton onClick={handleMakePayment}>
+            Abschliessen
+          </MakePaymentButton>
+          <OpenCalculatorButton>Rechner</OpenCalculatorButton>
+        </Stack>
       </Stack>
     </Paper>
   );
