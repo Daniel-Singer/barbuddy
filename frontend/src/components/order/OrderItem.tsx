@@ -1,16 +1,20 @@
 import { Group, Paper, Stack, Text } from "@mantine/core";
 import type { TItem } from "../../types/Item";
 import { convertCentsToEuros } from "../../utils/currency";
+import { orderStore } from "../../stores/orderStore";
 
-type Props = TItem & {};
+type Props = {
+  item: TItem;
+};
 
-const OrderItem = (props: Props) => {
+const OrderItem = ({ item }: Props) => {
+  const { addItemToOrder } = orderStore;
   return (
-    <Paper withBorder p={"xs"}>
+    <Paper withBorder p={"xs"} onClick={() => addItemToOrder(item)}>
       <Stack>
         <Group>
-          <Text>{props.name}</Text>
-          <Text>{convertCentsToEuros(props.price)}</Text>
+          <Text>{item.name}</Text>
+          <Text>{convertCentsToEuros(item.price)}</Text>
         </Group>
       </Stack>
     </Paper>

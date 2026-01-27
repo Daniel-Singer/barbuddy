@@ -7,10 +7,11 @@ const OrderForm = () => {
     queryKey: ["items"],
     queryFn: listAvailableItems,
   });
+
   return (
     <form>
       {items?.map((item) => (
-        <OrderItem key={item.id} {...item} />
+        <OrderItem key={item.id} item={item} />
       ))}
     </form>
   );
