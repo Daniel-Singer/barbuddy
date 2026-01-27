@@ -1,5 +1,7 @@
+import OrderForm from "../forms/order/OrderForm";
+
 const CashRegisterPage = () => {
-  return <div>CashRegisterPage</div>;
+  return <OrderForm />;
 };
 
 export default CashRegisterPage;
