@@ -18,6 +18,7 @@ const items: TItem[] = [
     currency: "EUR",
     unit: "ltr",
     price: 450,
+    deposit: 200,
   },
   {
     id: "3",

@@ -8,4 +8,5 @@ export type TItem = {
   currency: TCurrencyString;
   unit: string; // TODO - declare unit
   price: number;
+  deposit?: number;
 };
