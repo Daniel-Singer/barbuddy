@@ -54,6 +54,23 @@ const items: ItemReceive[] = [
     },
     deposit: 200,
   },
+  {
+    _id: "5",
+    name: "Radler",
+    categories: [],
+    currency: "EUR",
+    unit: "ltr",
+    servingSize: 0.5,
+    purchase: {
+      price: 120,
+      taxRate: 20,
+    },
+    sell: {
+      price: 420,
+      taxRate: 20,
+    },
+    deposit: 200,
+  },
 ];
 
 export const listAvailableItems = async (): Promise<ItemReceive[]> => {

@@ -1,4 +1,4 @@
-import { Divider, Group, Paper, Stack } from "@mantine/core";
+import { Box, Divider, Group, Paper, Stack } from "@mantine/core";
 import { orderStore } from "../../stores/orderStore";
 
 import { observer } from "mobx-react-lite";
@@ -16,12 +16,14 @@ const OrderOverview = observer(() => {
   return (
     <Paper miw={"33%"} h={"100%"} withBorder>
       <Stack gap={0} h={"100%"} justify="space-between">
-        <Stack gap={0}>
-          <OrderSum />
+        <Stack gap={0} flex={1}>
+          <Box flex={1}>
+            {orderedItems?.map((item) => (
+              <OrderItem key={item.name} item={item} />
+            ))}
+          </Box>
           <Divider />
-          {orderedItems?.map((item) => (
-            <OrderItem key={item.name} item={item} />
-          ))}
+          <OrderSum />
         </Stack>
 
         <Group p={"xs"} grow gap={"xs"} visibleFrom="lg">

@@ -13,7 +13,7 @@ const OrderForm = () => {
     <form>
       <Flex gap={"xs"} wrap={"wrap"}>
         {items?.map((item) => (
-          <OrderSelectItem key={item.id} item={item} />
+          <OrderSelectItem key={item._id} item={item} />
         ))}
       </Flex>
     </form>

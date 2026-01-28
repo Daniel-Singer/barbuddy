@@ -13,6 +13,9 @@ class OrderStore {
   private _totalDeposit = 0;
   private _chargedDepositCount = 0;
 
+  private _depositReturnSum = 0;
+  private _depositReturnCount = 0;
+
   constructor() {
     makeAutoObservable(this, undefined, {
       autoBind: true,
@@ -42,8 +45,14 @@ class OrderStore {
     return Array.from(mappedItems.values());
   }
 
+  get totalArticles() {
+    return convertCentsToEuros(this._total);
+  }
+
   get orderTotal() {
-    return convertCentsToEuros(this._total + this._totalDeposit);
+    return convertCentsToEuros(
+      this._total + this._totalDeposit - this._depositReturnSum,
+    );
   }
 
   get totalDeposits() {
@@ -52,6 +61,14 @@ class OrderStore {
 
   get depositCount() {
     return this._chargedDepositCount;
+  }
+
+  get depositReturnSum() {
+    return convertCentsToEuros(this._depositReturnSum * -1);
+  }
+
+  get depositReturnCount() {
+    return this._depositReturnCount;
   }
 
   private calculateDeposit(existingItem: Item, deposit: number | null) {
@@ -89,11 +106,25 @@ class OrderStore {
     this.updateDeposit("remove", itemToRemove.deposit);
   }
 
+  addReturnDeposit(deposit: number) {
+    this._depositReturnCount += 1;
+    this._depositReturnSum += deposit;
+  }
+
+  removeReturnDeposit(deposit: number) {
+    if (this._depositReturnCount > 0) {
+      this._depositReturnCount -= 1;
+      this._depositReturnSum -= deposit;
+    }
+  }
+
   resetOrder() {
     this._items = [];
     this._total = 0;
     this._totalDeposit = 0;
     this._chargedDepositCount = 0;
+    this._depositReturnCount = 0;
+    this._depositReturnSum = 0;
   }
 }
 
