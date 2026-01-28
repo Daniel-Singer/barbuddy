@@ -1,4 +1,4 @@
-import type { Item } from "../schemas/zodItem";
+import type { Item, ItemCreate } from "../schemas/zodItem";
 
 // TODO - replace with real data from backend
 
@@ -58,4 +58,9 @@ const items: Item[] = [
 
 export const listAvailableItems = async (): Promise<Item[]> => {
   return items;
+};
+
+export const addItem = async (data: ItemCreate) => {
+  console.log(data);
+  return data;
 };

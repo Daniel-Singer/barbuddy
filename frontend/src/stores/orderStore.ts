@@ -29,14 +29,14 @@ class OrderStore {
         mappedItems.set(key, {
           ...item,
           count: 1,
-          total: item.sell.price,
+          total: item.sell.price || 0,
         });
       } else {
         const existing = mappedItems.get(key)!;
 
         existing.deposit = this.calculateDeposit(existing, item.deposit);
         existing.count += 1;
-        existing.total += item.sell.price;
+        existing.total += item.sell.price || 0;
       }
     }
     return Array.from(mappedItems.values());
@@ -73,7 +73,7 @@ class OrderStore {
 
   addItemToOrder(item: Item) {
     this._items.push(item);
-    this._total += item.sell.price;
+    this._total += item.sell.price ?? 0;
     this.updateDeposit("add", item.deposit);
   }
 
@@ -84,7 +84,7 @@ class OrderStore {
 
     const itemToRemove = this._items[index];
 
-    this._total -= itemToRemove.sell.price;
+    this._total -= itemToRemove.sell.price || 0;
     this._items.splice(index, 1);
     this.updateDeposit("remove", itemToRemove.deposit);
   }

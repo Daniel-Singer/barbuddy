@@ -6,7 +6,20 @@ interface Props<T> {
   field: string;
 }
 const UnitSelect = <T,>({ form, field }: Props<T>) => {
-  return <Select label="Einheit" data={[]} {...form.getInputProps(field)} />;
+  const options = [
+    {
+      label: "Liter",
+      value: "ltr",
+    },
+  ];
+  return (
+    <Select
+      label="Einheit"
+      data={options}
+      {...form.getInputProps(field)}
+      withAsterisk
+    />
+  );
 };
 
 export default UnitSelect;

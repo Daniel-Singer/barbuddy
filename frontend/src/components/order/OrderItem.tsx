@@ -13,7 +13,7 @@ const OrderItem = ({ item }: Props) => {
   return (
     <Group p={"xs"} justify="space-between">
       <Group gap={"xs"}>
-        <MinusButton onClick={() => removeItemFromOrder(item.id)} />
+        <MinusButton onClick={() => removeItemFromOrder(item._id)} />
         <Text>{count}</Text>
         <Text>{name}</Text>
       </Group>

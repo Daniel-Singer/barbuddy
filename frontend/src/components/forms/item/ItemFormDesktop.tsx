@@ -1,86 +1,113 @@
 import {
-  Group,
+  FocusTrap,
   MultiSelect,
+  NumberInput,
   SimpleGrid,
   Stack,
-  Text,
   TextInput,
 } from "@mantine/core";
 import SaveButton from "../../buttons/SaveButton";
 import UnitSelect from "../common/UnitSelect";
-import PlusButton from "../../buttons/PlusButton";
-import FormWrapper from "../common/FormWrapper";
 import { ItemFormProvider, useItemForm } from "./context";
-import ItemVariantDesktop from "./ItemVariantDesktop";
+import { useMutation } from "@tanstack/react-query";
+import { addItem } from "../../../queries/itemQueries";
 
 const ItemFormDesktop = () => {
+  const { mutate } = useMutation({
+    mutationFn: addItem,
+    onSuccess: () => alert("asölkdjf"),
+    onError: () => alert("error"),
+  });
   const form = useItemForm({
     initialValues: {
       name: "",
       categories: [],
       unit: "",
       currency: "EUR",
-      variants: [
-        {
-          name: "",
-          servingSize: 0,
-          purchase: {
-            price: 0,
-            taxRate: 0,
-          },
-          sell: {
-            price: 0,
-            taxRate: 0,
-          },
-          deposit: "",
-        },
-      ],
+      servingSize: null,
+      purchase: {
+        price: null,
+        taxRate: null,
+      },
+      sell: {
+        price: null,
+        taxRate: null,
+      },
+      deposit: null,
+    },
+    validate: {
+      name: (value) => (value !== "" && value ? null : "Pflichtfeld"),
+      servingSize: (value) => (value && value >= 0 ? null : "Pflichtfeld"),
+      unit: (value) => (value && value !== "" ? null : "Pflichtfeld"),
+      sell: {
+        price: (value) => (value && value > 0 ? null : "Pflichtfeld"),
+      },
     },
   });
 
-  const addNewVariant = () => {
-    form.insertListItem("variants", {
-      name: "",
-      servingSize: 0,
-      purchase: {
-        price: 0,
-        taxRate: 0,
-      },
-      sell: {
-        price: 0,
-        taxRate: 0,
-      },
-      deposit: "",
-    });
-  };
   return (
-    <FormWrapper>
-      <ItemFormProvider form={form}>
-        <form
-          onSubmit={form.onSubmit(
-            (values) => console.log("Form values:", values),
-            (errors) => console.error("Form errors:", errors)
-          )}
-        >
+    <ItemFormProvider form={form}>
+      <FocusTrap>
+        <form onSubmit={form.onSubmit((values) => mutate(values))}>
           <Stack>
-            <TextInput label={"Bezeichnung"} {...form.getInputProps("name")} />
+            <TextInput
+              label={"Bezeichnung"}
+              {...form.getInputProps("name")}
+              withAsterisk
+              data-autofocus
+            />
             <SimpleGrid cols={2}>
               <MultiSelect
                 label="Kategorie"
                 {...form.getInputProps("categories")}
+                withAsterisk
+              />
+            </SimpleGrid>
+            <SimpleGrid cols={2}>
+              <NumberInput
+                {...form.getInputProps("servingSize")}
+                label="Menge"
+                withAsterisk
+                decimalScale={2}
               />
               <UnitSelect form={form} field="unit" />
             </SimpleGrid>
-            <Group justify="space-between">
-              <Text c={"blue"}>Varianten</Text>
-              <PlusButton onClick={addNewVariant} />
-            </Group>
-            <ItemVariantDesktop />
+            <SimpleGrid cols={2}>
+              <NumberInput
+                {...form.getInputProps("purchase.price")}
+                label="Einkaufspreis"
+                withAsterisk
+              />
+              <NumberInput
+                {...form.getInputProps("purchase.taxRate")}
+                label="Steuer %"
+                withAsterisk
+              />
+            </SimpleGrid>
+            <SimpleGrid cols={2}>
+              <NumberInput
+                {...form.getInputProps("sell.price")}
+                label="Verkaufspreis"
+                withAsterisk
+              />
+              <NumberInput
+                {...form.getInputProps("sell.taxRate")}
+                label="Steuer %"
+                withAsterisk
+              />
+            </SimpleGrid>
+            <SimpleGrid cols={2}>
+              <NumberInput
+                {...form.getInputProps("deposit")}
+                label="Bechereinsatz"
+                description="Wird beim Verkauf automatisch hinzugefügt"
+              />
+            </SimpleGrid>
             <SaveButton>Speichern</SaveButton>
           </Stack>
         </form>
-      </ItemFormProvider>
-    </FormWrapper>
+      </FocusTrap>
+    </ItemFormProvider>
   );
 };
 

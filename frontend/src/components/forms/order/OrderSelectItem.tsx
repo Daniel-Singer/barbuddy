@@ -1,12 +1,12 @@
 import { Paper, Stack, Text } from "@mantine/core";
-import type { TItem } from "../../../types/Item";
 import { convertCentsToEuros } from "../../../utils/currency";
 import { orderStore } from "../../../stores/orderStore";
 
 import styles from "./OrderSelectItem.module.css";
+import type { Item } from "../../../schemas/zodItem";
 
 type Props = {
-  item: TItem;
+  item: Item;
 };
 
 const OrderSelectItem = ({ item }: Props) => {
