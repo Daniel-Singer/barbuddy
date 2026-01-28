@@ -8,16 +8,37 @@ const items: TItem[] = [
     name: "Bier",
     categories: [],
     currency: "EUR",
-    unit: "ltr",
-    price: 350,
+    unit: {
+      name: "ltr",
+    },
+    servingSize: 0.33,
+    purchase: {
+      price: 120,
+      taxRate: 20,
+    },
+    sell: {
+      price: 300,
+      taxRate: 20,
+    },
+    deposit: 200,
   },
   {
     id: "2",
     name: "Spritzer",
     categories: [],
     currency: "EUR",
-    unit: "ltr",
-    price: 450,
+    unit: {
+      name: "ltr",
+    },
+    servingSize: 0.5,
+    purchase: {
+      price: 180,
+      taxRate: 20,
+    },
+    sell: {
+      price: 400,
+      taxRate: 20,
+    },
     deposit: 200,
   },
   {
@@ -25,8 +46,19 @@ const items: TItem[] = [
     name: "Limo",
     categories: [],
     currency: "EUR",
-    unit: "ltr",
-    price: 300,
+    unit: {
+      name: "ltr",
+    },
+    servingSize: 0.33,
+    purchase: {
+      price: 120,
+      taxRate: 20,
+    },
+    sell: {
+      price: 300,
+      taxRate: 20,
+    },
+    deposit: 200,
   },
 ];
 

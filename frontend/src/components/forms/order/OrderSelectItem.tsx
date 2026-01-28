@@ -20,7 +20,7 @@ const OrderSelectItem = ({ item }: Props) => {
     >
       <Stack align="center" gap={0}>
         <Text size="xl">{item.name}</Text>
-        <Text c={"dimmed"}>{`${convertCentsToEuros(item.price)} €`}</Text>
+        <Text c={"dimmed"}>{`${convertCentsToEuros(item.sell.price)} €`}</Text>
       </Stack>
     </Paper>
   );
