@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import { convertCentsToEuros } from "../utils/currency";
-import type { Item } from "../schemas/zodItem";
+import type { Item, ItemReceive } from "../schemas/zodItem";
 
 export type TOrderedItem = Item & {
   count: number;
@@ -8,7 +8,7 @@ export type TOrderedItem = Item & {
 };
 
 class OrderStore {
-  private _items: Item[] = [];
+  private _items: ItemReceive[] = [];
   private _total: number = 0;
   private _totalDeposit = 0;
   private _chargedDepositCount = 0;
@@ -20,7 +20,7 @@ class OrderStore {
   }
 
   get orderedItems() {
-    const mappedItems = new Map<string, Item & TOrderedItem>();
+    const mappedItems = new Map<string, ItemReceive & TOrderedItem>();
 
     for (const item of this._items) {
       const key = `${item._id}|${item.name}|${item.currency}|${item.unit}`;
@@ -29,7 +29,7 @@ class OrderStore {
         mappedItems.set(key, {
           ...item,
           count: 1,
-          total: item.sell.price || 0,
+          total: item.sell.price,
         });
       } else {
         const existing = mappedItems.get(key)!;
@@ -71,9 +71,9 @@ class OrderStore {
     this._chargedDepositCount += 1 * multiplier;
   }
 
-  addItemToOrder(item: Item) {
+  addItemToOrder(item: ItemReceive) {
     this._items.push(item);
-    this._total += item.sell.price ?? 0;
+    this._total += item.sell.price;
     this.updateDeposit("add", item.deposit);
   }
 
@@ -84,7 +84,7 @@ class OrderStore {
 
     const itemToRemove = this._items[index];
 
-    this._total -= itemToRemove.sell.price || 0;
+    this._total -= itemToRemove.sell.price;
     this._items.splice(index, 1);
     this.updateDeposit("remove", itemToRemove.deposit);
   }

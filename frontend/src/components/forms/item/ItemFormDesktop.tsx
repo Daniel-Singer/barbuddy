@@ -59,8 +59,8 @@ const ItemFormDesktop = () => {
             <SimpleGrid cols={2}>
               <MultiSelect
                 label="Kategorie"
+                description="Wird nur zum Filtern benutzt"
                 {...form.getInputProps("categories")}
-                withAsterisk
               />
             </SimpleGrid>
             <SimpleGrid cols={2}>
@@ -76,12 +76,10 @@ const ItemFormDesktop = () => {
               <NumberInput
                 {...form.getInputProps("purchase.price")}
                 label="Einkaufspreis"
-                withAsterisk
               />
               <NumberInput
                 {...form.getInputProps("purchase.taxRate")}
                 label="Steuer %"
-                withAsterisk
               />
             </SimpleGrid>
             <SimpleGrid cols={2}>
@@ -93,7 +91,6 @@ const ItemFormDesktop = () => {
               <NumberInput
                 {...form.getInputProps("sell.taxRate")}
                 label="Steuer %"
-                withAsterisk
               />
             </SimpleGrid>
             <SimpleGrid cols={2}>
