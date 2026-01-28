@@ -1,16 +1,14 @@
-import type { TItem } from "../types/Item";
+import type { Item } from "../schemas/zodItem";
 
 // TODO - replace with real data from backend
 
-const items: TItem[] = [
+const items: Item[] = [
   {
-    id: "1",
+    _id: "1",
     name: "Bier",
     categories: [],
     currency: "EUR",
-    unit: {
-      name: "ltr",
-    },
+    unit: "ltr",
     servingSize: 0.33,
     purchase: {
       price: 120,
@@ -23,13 +21,11 @@ const items: TItem[] = [
     deposit: 200,
   },
   {
-    id: "2",
+    _id: "2",
     name: "Spritzer",
     categories: [],
     currency: "EUR",
-    unit: {
-      name: "ltr",
-    },
+    unit: "ltr",
     servingSize: 0.5,
     purchase: {
       price: 180,
@@ -42,13 +38,11 @@ const items: TItem[] = [
     deposit: 200,
   },
   {
-    id: "3",
+    _id: "3",
     name: "Limo",
     categories: [],
     currency: "EUR",
-    unit: {
-      name: "ltr",
-    },
+    unit: "ltr",
     servingSize: 0.33,
     purchase: {
       price: 120,
@@ -62,6 +56,6 @@ const items: TItem[] = [
   },
 ];
 
-export const listAvailableItems = async (): Promise<TItem[]> => {
+export const listAvailableItems = async (): Promise<Item[]> => {
   return items;
 };

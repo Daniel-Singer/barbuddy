@@ -1,14 +1,14 @@
 import { makeAutoObservable } from "mobx";
-import type { TItem } from "../types/Item";
 import { convertCentsToEuros } from "../utils/currency";
+import type { Item } from "../schemas/zodItem";
 
-export type TOrderedItem = TItem & {
+export type TOrderedItem = Item & {
   count: number;
   total: number;
 };
 
 class OrderStore {
-  private _items: TItem[] = [];
+  private _items: Item[] = [];
   private _total: number = 0;
   private _totalDeposit = 0;
   private _chargedDepositCount = 0;
@@ -20,10 +20,10 @@ class OrderStore {
   }
 
   get orderedItems() {
-    const mappedItems = new Map<string, TItem & TOrderedItem>();
+    const mappedItems = new Map<string, Item & TOrderedItem>();
 
     for (const item of this._items) {
-      const key = `${item.id}|${item.name}|${item.currency}|${item.unit}`;
+      const key = `${item._id}|${item.name}|${item.currency}|${item.unit}`;
 
       if (!mappedItems.has(key)) {
         mappedItems.set(key, {
@@ -54,7 +54,7 @@ class OrderStore {
     return this._chargedDepositCount;
   }
 
-  private calculateDeposit(existingItem: TItem, deposit: number | null) {
+  private calculateDeposit(existingItem: Item, deposit: number | null) {
     return deposit
       ? (existingItem.deposit || 0) + deposit
       : existingItem.deposit;
@@ -71,14 +71,14 @@ class OrderStore {
     this._chargedDepositCount += 1 * multiplier;
   }
 
-  addItemToOrder(item: TItem) {
+  addItemToOrder(item: Item) {
     this._items.push(item);
     this._total += item.sell.price;
     this.updateDeposit("add", item.deposit);
   }
 
-  removeItemFromOrder(itemId: TItem["id"]) {
-    const index = this._items.findIndex((item) => item.id === itemId);
+  removeItemFromOrder(itemId: Item["_id"]) {
+    const index = this._items.findIndex((item) => item._id === itemId);
 
     if (index === -1) return this._items;
 
