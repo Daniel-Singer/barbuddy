@@ -1,0 +1,5 @@
+.item {
+    flex: 1 1 180px;
+    user-select: none;
+    cursor: pointer;
+}

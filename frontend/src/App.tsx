@@ -16,7 +16,7 @@ const App = () => {
         <ModalsProvider>
           <Stack h={"100%"} gap={0} w={"100%"}>
             <MainNav />
-            <Flex flex={1} w={"100%"}>
+            <Flex flex={1} w={"100%"} bg={"gray.1"} p={"xs"}>
               <Outlet />
             </Flex>
           </Stack>

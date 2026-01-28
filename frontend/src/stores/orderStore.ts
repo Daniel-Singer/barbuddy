@@ -2,15 +2,13 @@ import { makeAutoObservable } from "mobx";
 import type { TItem } from "../types/Item";
 import { convertCentsToEuros } from "../utils/currency";
 
-export type OrderedItem = {
-  name: string;
-  amount: number;
+export type TOrderedItem = TItem & {
+  count: number;
   total: number;
-  deposit: number | undefined;
 };
 
 class OrderStore {
-  private _items: Record<string, OrderedItem> = {};
+  private _items: TItem[] = [];
   private _total: number = 0;
   private _totalDeposit = 0;
   private _chargedDepositCount = 0;
@@ -22,7 +20,26 @@ class OrderStore {
   }
 
   get orderedItems() {
-    return Object.entries(this._items).map(([_key, value]) => ({ ...value }));
+    const mappedItems = new Map<string, TItem & TOrderedItem>();
+
+    for (const item of this._items) {
+      const key = `${item.id}|${item.name}|${item.currency}|${item.unit}`;
+
+      if (!mappedItems.has(key)) {
+        mappedItems.set(key, {
+          ...item,
+          count: 1,
+          total: item.price,
+        });
+      } else {
+        const existing = mappedItems.get(key)!;
+
+        existing.deposit = this.calculateDeposit(existing, item.deposit);
+        existing.count += 1;
+        existing.total += item.price;
+      }
+    }
+    return Array.from(mappedItems.values());
   }
 
   get orderTotal() {
@@ -37,41 +54,43 @@ class OrderStore {
     return this._chargedDepositCount;
   }
 
+  private calculateDeposit(existingItem: TItem, deposit?: number) {
+    return deposit
+      ? (existingItem.deposit || 0) + deposit
+      : existingItem.deposit;
+  }
+
+  private updateDeposit(direction: "add" | "remove", deposit?: number) {
+    if (!deposit) {
+      return;
+    }
+
+    const multiplier = direction === "add" ? 1 : -1;
+
+    this._totalDeposit += deposit * multiplier;
+    this._chargedDepositCount += 1 * multiplier;
+  }
+
   addItemToOrder(item: TItem) {
-    const { id, name, price, deposit } = item;
-
-    if (deposit) {
-      this._chargedDepositCount += 1;
-    }
-
-    if (!this._items[id]) {
-      this._items = {
-        ...this._items,
-        [item.id]: {
-          name,
-          amount: 1,
-          total: price,
-          deposit,
-        },
-      };
-    } else {
-      const calculatedDeposit = deposit
-        ? (this._items[id].deposit || 0) + deposit
-        : this._items[id].deposit;
-
-      this._items[id] = {
-        name,
-        amount: this._items[id].amount + 1,
-        total: this._items[id].total + price,
-        deposit: calculatedDeposit,
-      };
-    }
+    this._items.push(item);
     this._total += item.price;
-    this._totalDeposit += item.deposit || 0;
+    this.updateDeposit("add", item.deposit);
+  }
+
+  removeItemFromOrder(itemId: TItem["id"]) {
+    const index = this._items.findIndex((item) => item.id === itemId);
+
+    if (index === -1) return this._items;
+
+    const itemToRemove = this._items[index];
+
+    this._total -= itemToRemove.price;
+    this._items.splice(index, 1);
+    this.updateDeposit("remove", itemToRemove.deposit);
   }
 
   resetOrder() {
-    this._items = {};
+    this._items = [];
     this._total = 0;
     this._totalDeposit = 0;
     this._chargedDepositCount = 0;

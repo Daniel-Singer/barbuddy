@@ -1,5 +1,5 @@
 import { ActionIcon, type ActionIconProps } from "@mantine/core";
-import { IconPlus, type IconProps } from "@tabler/icons-react";
+import { IconMinus, type IconProps } from "@tabler/icons-react";
 
 type Props = {
   onClick?: () => void;
@@ -7,21 +7,19 @@ type Props = {
   iconProps?: IconProps;
 };
 
-const PlusButton = ({
+const MinusButton = ({
   onClick,
   actionIconProps = {
     variant: "light",
     size: "lg",
   },
-  iconProps = {
-    size: 20,
-  },
+  iconProps = { size: 20 },
 }: Props) => {
   return (
     <ActionIcon {...actionIconProps} onClick={onClick}>
-      <IconPlus {...iconProps} />
+      <IconMinus {...iconProps} />
     </ActionIcon>
   );
 };
 
-export default PlusButton;
+export default MinusButton;

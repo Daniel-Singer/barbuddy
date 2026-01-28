@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { listAvailableItems } from "../../../queries/itemQueries";
-import OrderItem from "./OrderItem";
+import { Flex } from "@mantine/core";
+import OrderSelectItem from "./OrderSelectItem";
 
 const OrderForm = () => {
   const { data: items } = useQuery({
@@ -10,9 +11,11 @@ const OrderForm = () => {
 
   return (
     <form>
-      {items?.map((item) => (
-        <OrderItem key={item.id} item={item} />
-      ))}
+      <Flex gap={"xs"} wrap={"wrap"}>
+        {items?.map((item) => (
+          <OrderSelectItem key={item.id} item={item} />
+        ))}
+      </Flex>
     </form>
   );
 };
