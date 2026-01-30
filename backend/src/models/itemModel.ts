@@ -26,16 +26,41 @@ const itemSchema = new Schema(
       default: 'EUR',
     },
     unit: {
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: 'Unit',
     },
     active: {
       type: Boolean,
       default: true,
     },
-    variants: {
-      type: [itemVariantSchema],
-      ref: 'ItemVariant',
+    servingSize: {
+      type: Number,
+      default: 0,
+    },
+    purchase: {
+      price: {
+        type: Number,
+        default: null,
+      },
+      taxRate: {
+        type: Number,
+        default: null,
+      },
+    },
+    sell: {
+      price: {
+        type: Number,
+        default: 0,
+        min: 0,
+      },
+      taxRate: {
+        type: Number,
+        default: null,
+      },
+    },
+    deposit: {
+      type: Number,
+      default: null,
     },
   },
   {
@@ -43,11 +68,11 @@ const itemSchema = new Schema(
   },
 );
 
-itemSchema
-  .path('variants')
-  .validate((value: ItemVariantDocument[] | undefined) => {
-    return value && value.length > 0;
-  });
+// itemSchema
+//   .path('variants')
+//   .validate((value: ItemVariantDocument[] | undefined) => {
+//     return value && value.length > 0;
+//   });
 
 export const Item = model('Item', itemSchema);
 

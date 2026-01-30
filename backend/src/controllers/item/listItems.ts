@@ -9,7 +9,8 @@ export const listItems = async (
   next: NextFunction,
 ) => {
   try {
-    const items = await Item.find(baseFilter(req));
+    // const items = await Item.find(baseFilter(req));
+    const items = await Item.find({});
     res.status(StatusCodes.OK).json(items);
   } catch (error) {
     next(error);

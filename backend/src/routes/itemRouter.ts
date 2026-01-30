@@ -11,15 +11,16 @@ export const itemRouter: Router = express.Router();
 
 itemRouter.get(
   '/',
-  allowedRoles([UserRoleEnum.ADMIN, UserRoleEnum.STATION]),
+  // allowedRoles([UserRoleEnum.ADMIN, UserRoleEnum.STATION]),
   listItems,
 );
 
-itemRouter.post('/', allowedRoles([UserRoleEnum.ADMIN]), addItem);
+// itemRouter.post('/', allowedRoles([UserRoleEnum.ADMIN]), addItem);
+itemRouter.post('/', addItem);
 
 itemRouter.get(
   '/:id',
-  allowedRoles([UserRoleEnum.ADMIN, UserRoleEnum.STATION]),
+  // allowedRoles([UserRoleEnum.ADMIN, UserRoleEnum.STATION]),
   getItem,
 );
 

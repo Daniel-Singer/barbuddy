@@ -9,17 +9,18 @@ export const addItem = async (
   next: NextFunction,
 ) => {
   try {
-    const exists = await Item.findOne({
-      name: req.body.name,
-      ...baseFilter(req),
-    });
-    if (exists) {
-      res.status(StatusCodes.CONFLICT);
-      throw new Error('Item already exists');
-    }
-    await Item.create({ ...req.body, orgId: req.auth.orgId });
+    // const exists = await Item.findOne({
+    //   name: req.body.name,
+    //   ...baseFilter(req),
+    // });
+    // if (exists) {
+    //   res.status(StatusCodes.CONFLICT);
+    //   throw new Error('Item already exists');
+    // }
+    await Item.create({ ...req.body, orgId: '692c74a327a1b874acdff72a' });
     res.sendStatus(StatusCodes.OK);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

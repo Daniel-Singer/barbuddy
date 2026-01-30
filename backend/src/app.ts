@@ -33,7 +33,7 @@ declare global {
   }
 }
 
-app.use(protect);
+// app.use(protect);
 
 // protected routes go here
 
