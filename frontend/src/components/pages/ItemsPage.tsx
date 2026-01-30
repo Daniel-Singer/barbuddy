@@ -1,8 +1,9 @@
 import AddButton from "../buttons/AddButton";
-import { Box, Group, Text } from "@mantine/core";
+import { Box, Group, Paper, Text } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import CategoryModal from "../modals/CategoryModal";
 import ItemFormDesktop from "../forms/item/ItemFormDesktop";
+import ItemsOverviewTable from "../tables/item/ItemsOverviewTable";
 
 const ItemsPage = () => {
   const openItemModal = () => {
@@ -25,7 +26,11 @@ const ItemsPage = () => {
           Kategorie
         </AddButton>
       </Group>
-      <Box flex={1}></Box>
+      <Box flex={1} p={"xs"}>
+        <Paper withBorder>
+          <ItemsOverviewTable />
+        </Paper>
+      </Box>
     </Box>
   );
 };

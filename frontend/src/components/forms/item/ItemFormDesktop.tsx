@@ -77,7 +77,7 @@ const ItemFormDesktop = () => {
             <SimpleGrid cols={2}>
               <NumberInput
                 {...form.getInputProps("purchase.price")}
-                label="Einkaufspreis"
+                label="Einkaufspreis €"
               />
               <NumberInput
                 {...form.getInputProps("purchase.taxRate")}
@@ -87,7 +87,7 @@ const ItemFormDesktop = () => {
             <SimpleGrid cols={2}>
               <NumberInput
                 {...form.getInputProps("sell.price")}
-                label="Verkaufspreis"
+                label="Verkaufspreis €"
                 withAsterisk
               />
               <NumberInput
