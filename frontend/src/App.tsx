@@ -5,6 +5,7 @@ import { Outlet } from "@tanstack/react-router";
 import { ModalsProvider } from "@mantine/modals";
 import MainNav from "./components/navigation/MainNav";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { theme } from "./theme";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => {
           </Stack>
         </ModalsProvider>
       </MantineProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 };

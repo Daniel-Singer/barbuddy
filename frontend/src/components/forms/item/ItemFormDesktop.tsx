@@ -15,8 +15,10 @@ import { addItem } from "../../../queries/itemQueries";
 const ItemFormDesktop = () => {
   const { mutate } = useMutation({
     mutationFn: addItem,
-    onSuccess: () => alert("asölkdjf"),
-    onError: () => alert("error"),
+    onSuccess: () => alert("success"),
+    onError: (error) => {
+      console.log(error);
+    },
   });
   const form = useItemForm({
     initialValues: {

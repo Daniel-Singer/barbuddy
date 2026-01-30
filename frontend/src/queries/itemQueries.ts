@@ -1,3 +1,5 @@
+import axios from "../axios";
+import { apiPath } from "../config";
 import type { ItemCreate, ItemReceive } from "../schemas/zodItem";
 
 // TODO - replace with real data from backend
@@ -74,10 +76,11 @@ const items: ItemReceive[] = [
 ];
 
 export const listAvailableItems = async (): Promise<ItemReceive[]> => {
-  return items;
+  const { data } = await axios.get(apiPath("items"));
+  return data;
 };
 
-export const addItem = async (data: ItemCreate) => {
-  console.log(data);
+export const addItem = async (item: ItemCreate) => {
+  const { data } = await axios.post(apiPath("items"), item);
   return data;
 };
