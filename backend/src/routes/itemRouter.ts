@@ -1,12 +1,12 @@
 import express, { type Router } from 'express';
-import { listItems } from '../controllers/item/listItems';
 import { addItem } from '../controllers/item/addItem';
-import { getItem } from '../controllers/item/getItem';
-import { updateItem } from '../controllers/item/updateItem';
 import { deleteItem } from '../controllers/item/deleteItem';
+import { getItem } from '../controllers/item/getItem';
+import { listItems } from '../controllers/item/listItems';
+import { updateItem } from '../controllers/item/updateItem';
 import { allowedRoles } from '../middlewares/auth';
-import { UserRoleEnum } from '../schema/userSchema';
 import { transformValues } from '../middlewares/items';
+import { UserRoleEnum } from '../schema/userSchema';
 
 export const itemRouter: Router = express.Router();
 
@@ -27,4 +27,8 @@ itemRouter.get(
 
 itemRouter.put('/:id', allowedRoles([UserRoleEnum.ADMIN]), updateItem);
 
-itemRouter.patch('/:id', allowedRoles([UserRoleEnum.ADMIN]), deleteItem);
+itemRouter.patch(
+  '/:id',
+  // allowedRoles([UserRoleEnum.ADMIN]),
+  deleteItem,
+);

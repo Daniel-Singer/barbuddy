@@ -7,6 +7,11 @@ export const listAvailableItems = async (): Promise<ItemReceive[]> => {
   return data;
 };
 
+export const getItem = async (_id: string): Promise<ItemReceive> => {
+  const { data } = await axios.get(apiPath(`items/${_id}`));
+  return data;
+};
+
 export const addItem = async (item: ItemCreate) => {
   const { data } = await axios.post(apiPath("items"), item);
   return data;
@@ -18,6 +23,6 @@ export const updateItem = async (item: Item) => {
 };
 
 export const removeItem = async (_id: Item["_id"]) => {
-  const { data } = await axios.patch(apiPath(`/${_id}`));
+  const { data } = await axios.patch(apiPath(`items/${_id}`));
   return data;
 };

@@ -1,7 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
-import { Item } from '../../models/itemModel';
-import { baseFilter } from '../common';
+import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { Item } from '../../models/itemModel';
 
 export const listItems = async (
   req: Request,
@@ -10,7 +9,7 @@ export const listItems = async (
 ) => {
   try {
     // const items = await Item.find(baseFilter(req));
-    const items = await Item.find({});
+    const items = await Item.find({ active: true });
     res.status(StatusCodes.OK).json(items);
   } catch (error) {
     next(error);

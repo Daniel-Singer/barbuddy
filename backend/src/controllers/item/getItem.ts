@@ -1,7 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
-import { Item } from '../../models/itemModel';
-import { baseFilter } from '../common';
+import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { Item } from '../../models/itemModel';
 
 export const getItem = async (
   req: Request,
@@ -11,7 +10,7 @@ export const getItem = async (
   try {
     const item = await Item.findOne({
       _id: req.params.id,
-      ...baseFilter(req),
+      // ...baseFilter(req),
     });
     res.status(StatusCodes.OK).json(item);
   } catch (error) {
