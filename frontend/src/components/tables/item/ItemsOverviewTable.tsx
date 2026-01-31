@@ -1,6 +1,9 @@
 import { Table } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { listAvailableItems } from "../../../queries/itemQueries";
+import { convertCentsToEuros } from "../../../utils/currency";
+import { convertMillilitersToLiters } from "../../../utils/liquids";
+import { currencyLabels } from "../../../config";
 
 const ItemsOverviewTable = () => {
   const { data: items } = useQuery({
@@ -34,12 +37,12 @@ const ItemsOverviewTable = () => {
           }) => (
             <Table.Tr key={_id}>
               <Table.Td>{name}</Table.Td>
-              <Table.Td>{servingSize}</Table.Td>
+              <Table.Td>{convertMillilitersToLiters(servingSize)}</Table.Td>
               <Table.Td>{unit}</Table.Td>
-              <Table.Td>{deposit}</Table.Td>
+              <Table.Td>{convertCentsToEuros(deposit)}</Table.Td>
               <Table.Td>{"--"}</Table.Td>
-              <Table.Td>{`${currency} ${sell.price}`}</Table.Td>
-              <Table.Td>{`${currency} ${purchase.price}`}</Table.Td>
+              <Table.Td>{`${currencyLabels[currency]} ${convertCentsToEuros(sell.price)}`}</Table.Td>
+              <Table.Td>{`${currencyLabels[currency]} ${convertCentsToEuros(purchase.price)}`}</Table.Td>
             </Table.Tr>
           ),
         )}

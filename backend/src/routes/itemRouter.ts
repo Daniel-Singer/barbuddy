@@ -6,6 +6,7 @@ import { updateItem } from '../controllers/item/updateItem';
 import { deleteItem } from '../controllers/item/deleteItem';
 import { allowedRoles } from '../middlewares/auth';
 import { UserRoleEnum } from '../schema/userSchema';
+import { transformValues } from '../middlewares/items';
 
 export const itemRouter: Router = express.Router();
 
@@ -16,7 +17,7 @@ itemRouter.get(
 );
 
 // itemRouter.post('/', allowedRoles([UserRoleEnum.ADMIN]), addItem);
-itemRouter.post('/', addItem);
+itemRouter.post('/', transformValues, addItem);
 
 itemRouter.get(
   '/:id',

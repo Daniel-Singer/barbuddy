@@ -11,11 +11,15 @@ import UnitSelect from "../common/UnitSelect";
 import { ItemFormProvider, useItemForm } from "./context";
 import { useMutation } from "@tanstack/react-query";
 import { addItem } from "../../../queries/itemQueries";
+import { modals } from "@mantine/modals";
 
 const ItemFormDesktop = () => {
   const { mutate } = useMutation({
+    mutationKey: ["add_item"],
     mutationFn: addItem,
-    onSuccess: () => alert("success"),
+    onSuccess: () => {
+      modals.close("create_item_modal");
+    },
     onError: (error) => {
       console.log(error);
     },
