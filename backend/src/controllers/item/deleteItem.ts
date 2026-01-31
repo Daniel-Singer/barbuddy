@@ -1,7 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
-import { baseFilter } from '../common';
-import { Item } from '../../models/itemModel';
+import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { Item } from '../../models/itemModel';
 
 export const deleteItem = async (
   req: Request,
@@ -12,7 +11,7 @@ export const deleteItem = async (
     const item = await Item.findOneAndUpdate(
       {
         _id: req.params.id,
-        ...baseFilter(req),
+        // ...baseFilter(req),
       },
       { active: false },
       { new: true },
