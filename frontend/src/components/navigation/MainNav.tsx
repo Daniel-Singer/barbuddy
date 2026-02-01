@@ -52,6 +52,7 @@ const MainNav = () => {
         <Stack gap={0}>
           {navLinks.map(({ label, href }) => (
             <UnstyledButton
+              key={href}
               component={Link}
               href={href}
               onClick={toggle}

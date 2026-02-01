@@ -6,19 +6,23 @@ import {
   Stack,
   TextInput,
 } from "@mantine/core";
+import { modals } from "@mantine/modals";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { addItem } from "../../../queries/itemQueries";
 import SaveButton from "../../buttons/SaveButton";
 import UnitSelect from "../common/UnitSelect";
 import { ItemFormProvider, useItemForm } from "./context";
-import { useMutation } from "@tanstack/react-query";
-import { addItem } from "../../../queries/itemQueries";
-import { modals } from "@mantine/modals";
 
 const ItemFormDesktop = () => {
+  const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationKey: ["add_item"],
     mutationFn: addItem,
     onSuccess: () => {
-      modals.close("create_item_modal");
+      modals.closeAll();
+      queryClient.invalidateQueries({
+        queryKey: ["items"],
+      });
     },
     onError: (error) => {
       console.log(error);
