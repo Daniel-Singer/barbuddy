@@ -7,15 +7,37 @@ import {
   TextInput,
 } from "@mantine/core";
 import { modals } from "@mantine/modals";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addItem } from "../../../queries/itemQueries";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useSearch } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { addItem, getItem, updateItem } from "../../../queries/itemQueries";
+import type { ItemCreate } from "../../../schemas/zodItem";
 import SaveButton from "../../buttons/SaveButton";
 import UnitSelect from "../common/UnitSelect";
 import { ItemFormProvider, useItemForm } from "./context";
 
 const ItemFormDesktop = () => {
   const queryClient = useQueryClient();
-  const { mutate } = useMutation({
+
+  const search = useSearch({
+    strict: false,
+  });
+
+  const { data: item } = useQuery({
+    queryKey: ["item"],
+    queryFn: () => getItem(search.itemToUpdate!),
+    enabled: !!search.itemToUpdate,
+  });
+
+  useEffect(() => {
+    if (item) {
+      form.setValues(item);
+    } else {
+      form.reset();
+    }
+  }, [item]);
+
+  const { mutate: createItem } = useMutation({
     mutationKey: ["add_item"],
     mutationFn: addItem,
     onSuccess: () => {
@@ -28,6 +50,22 @@ const ItemFormDesktop = () => {
       console.log(error);
     },
   });
+
+  const { mutate: updateExistingItem } = useMutation({
+    mutationKey: ["update_item"],
+    mutationFn: updateItem,
+    onSuccess: () => {
+      form.reset();
+      modals.closeAll();
+      queryClient.invalidateQueries({
+        queryKey: ["items"],
+      });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
   const form = useItemForm({
     initialValues: {
       name: "",
@@ -55,10 +93,19 @@ const ItemFormDesktop = () => {
     },
   });
 
+  const handleSubmit = (values: ItemCreate, _id: string | undefined) => {
+    if (!_id) {
+      createItem(values);
+    } else {
+      updateExistingItem({ update: values, _id });
+    }
+  };
   return (
     <ItemFormProvider form={form}>
       <FocusTrap>
-        <form onSubmit={form.onSubmit((values) => mutate(values))}>
+        <form
+          onSubmit={form.onSubmit((values) => handleSubmit(values, item?._id))}
+        >
           <Stack>
             <TextInput
               label={"Bezeichnung"}

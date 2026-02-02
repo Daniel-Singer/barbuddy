@@ -1,4 +1,5 @@
 import { ActionIcon, Anchor, Table } from "@mantine/core";
+import { modals } from "@mantine/modals";
 import { IconPencil } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
@@ -14,6 +15,22 @@ const ItemsOverviewTable = () => {
   });
 
   const navigate = useNavigate();
+
+  const handleUpdateItem = ({ _id, name }: { _id: string; name: string }) => {
+    navigate({
+      to: `/items`,
+      search: {
+        itemToUpdate: _id,
+      },
+    });
+    modals.openContextModal({
+      modal: "item",
+      title: `${name.toUpperCase()} BEARBEITEN`,
+      innerProps: {},
+      size: "lg",
+      onClose: () => navigate({ search: undefined }),
+    });
+  };
 
   return (
     <Table highlightOnHover>
@@ -66,7 +83,7 @@ const ItemsOverviewTable = () => {
               <Table.Td>
                 <ActionIcon
                   variant="subtle"
-                  onClick={() => alert("clickedy click")}
+                  onClick={() => handleUpdateItem({ _id, name })}
                 >
                   <IconPencil stroke={2} />
                 </ActionIcon>

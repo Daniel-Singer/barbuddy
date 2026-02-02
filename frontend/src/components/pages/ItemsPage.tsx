@@ -22,8 +22,8 @@ const ItemsPage = () => {
         <AddButton
           onClick={() =>
             modals.openContextModal({
-              modal: "test",
-              title: <Text>TEST</Text>,
+              modal: "item",
+              title: <Text>NEUER ARTIKEL</Text>,
               size: "lg",
               innerProps: {},
             })

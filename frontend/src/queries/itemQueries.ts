@@ -17,8 +17,15 @@ export const addItem = async (item: ItemCreate) => {
   return data;
 };
 
-export const updateItem = async (item: Item) => {
-  const { data } = await axios.put(apiPath("items"), item);
+export const updateItem = async ({
+  update,
+  _id,
+}: {
+  update: ItemCreate;
+  _id: string;
+}) => {
+  console.log({ update, _id });
+  const { data } = await axios.put(apiPath(`items/${_id}`), update);
   return data;
 };
 
