@@ -3,6 +3,7 @@ import { modals } from "@mantine/modals";
 import { useMutationState } from "@tanstack/react-query";
 import { useEffect } from "react";
 import AddButton from "../buttons/AddButton";
+import EditButton from "../buttons/EditButton";
 import ItemsOverviewTable from "../tables/item/ItemsOverviewTable";
 
 const ItemsPage = () => {
@@ -31,6 +32,17 @@ const ItemsPage = () => {
         >
           Neuer Artikel
         </AddButton>
+        <EditButton
+          onClick={() =>
+            modals.openContextModal({
+              modal: "deposit",
+              title: <Text>NEUER ARTIKEL</Text>,
+              innerProps: {},
+            })
+          }
+        >
+          Einsatz bearbeiten
+        </EditButton>
       </Group>
       <Box flex={1} p={"xs"}>
         <Paper withBorder>

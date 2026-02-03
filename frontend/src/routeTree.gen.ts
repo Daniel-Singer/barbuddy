@@ -17,7 +17,6 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CashregisterRouteImport } from './routes/cashregister'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ItemsIndexRouteImport } from './routes/items/index'
-import { Route as ItemsItemIdRouteImport } from './routes/items/$itemId'
 
 const WarehouseRoute = WarehouseRouteImport.update({
   id: '/warehouse',
@@ -59,11 +58,6 @@ const ItemsIndexRoute = ItemsIndexRouteImport.update({
   path: '/items/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ItemsItemIdRoute = ItemsItemIdRouteImport.update({
-  id: '/items/$itemId',
-  path: '/items/$itemId',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -73,7 +67,6 @@ export interface FileRoutesByFullPath {
   '/orders': typeof OrdersRoute
   '/settings': typeof SettingsRoute
   '/warehouse': typeof WarehouseRoute
-  '/items/$itemId': typeof ItemsItemIdRoute
   '/items': typeof ItemsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -84,7 +77,6 @@ export interface FileRoutesByTo {
   '/orders': typeof OrdersRoute
   '/settings': typeof SettingsRoute
   '/warehouse': typeof WarehouseRoute
-  '/items/$itemId': typeof ItemsItemIdRoute
   '/items': typeof ItemsIndexRoute
 }
 export interface FileRoutesById {
@@ -96,7 +88,6 @@ export interface FileRoutesById {
   '/orders': typeof OrdersRoute
   '/settings': typeof SettingsRoute
   '/warehouse': typeof WarehouseRoute
-  '/items/$itemId': typeof ItemsItemIdRoute
   '/items/': typeof ItemsIndexRoute
 }
 export interface FileRouteTypes {
@@ -109,7 +100,6 @@ export interface FileRouteTypes {
     | '/orders'
     | '/settings'
     | '/warehouse'
-    | '/items/$itemId'
     | '/items'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -120,7 +110,6 @@ export interface FileRouteTypes {
     | '/orders'
     | '/settings'
     | '/warehouse'
-    | '/items/$itemId'
     | '/items'
   id:
     | '__root__'
@@ -131,7 +120,6 @@ export interface FileRouteTypes {
     | '/orders'
     | '/settings'
     | '/warehouse'
-    | '/items/$itemId'
     | '/items/'
   fileRoutesById: FileRoutesById
 }
@@ -143,7 +131,6 @@ export interface RootRouteChildren {
   OrdersRoute: typeof OrdersRoute
   SettingsRoute: typeof SettingsRoute
   WarehouseRoute: typeof WarehouseRoute
-  ItemsItemIdRoute: typeof ItemsItemIdRoute
   ItemsIndexRoute: typeof ItemsIndexRoute
 }
 
@@ -205,13 +192,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ItemsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/items/$itemId': {
-      id: '/items/$itemId'
-      path: '/items/$itemId'
-      fullPath: '/items/$itemId'
-      preLoaderRoute: typeof ItemsItemIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -223,7 +203,6 @@ const rootRouteChildren: RootRouteChildren = {
   OrdersRoute: OrdersRoute,
   SettingsRoute: SettingsRoute,
   WarehouseRoute: WarehouseRoute,
-  ItemsItemIdRoute: ItemsItemIdRoute,
   ItemsIndexRoute: ItemsIndexRoute,
 }
 export const routeTree = rootRouteImport

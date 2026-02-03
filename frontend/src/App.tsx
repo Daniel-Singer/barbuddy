@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Outlet } from "@tanstack/react-router";
 import "./App.css";
+import DepositModal from "./components/modals/DepositModal";
 import ItemModal from "./components/modals/ItemModal";
 import MainNav from "./components/navigation/MainNav";
 import { theme } from "./theme";
@@ -15,7 +16,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <MantineProvider theme={theme} forceColorScheme="light">
-        <ModalsProvider modals={{ item: ItemModal }}>
+        <ModalsProvider modals={{ item: ItemModal, deposit: DepositModal }}>
           <Stack h={"100%"} gap={0} w={"100%"}>
             <MainNav />
             <Flex flex={1} w={"100%"} bg={"gray.1"} p={"xs"}>

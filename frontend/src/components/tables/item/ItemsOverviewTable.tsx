@@ -1,12 +1,4 @@
-import {
-  ActionIcon,
-  Alert,
-  Anchor,
-  Group,
-  Stack,
-  Table,
-  Text,
-} from "@mantine/core";
+import { ActionIcon, Alert, Group, Stack, Table, Text } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import {
   IconCheck,
@@ -16,7 +8,7 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { currencyLabels } from "../../../config";
 import { listAvailableItems, removeItem } from "../../../queries/itemQueries";
 import { convertCentsToEuros } from "../../../utils/currency";
@@ -109,14 +101,9 @@ const ItemsOverviewTable = () => {
               onDoubleClick={() => navigate({ to: `/items/${_id}` })}
             >
               <Table.Td>
-                <Anchor
-                  component={Link}
-                  href={`/items/${_id}`}
-                  size="sm"
-                  fw={500}
-                >
+                <Text size="sm" fw={600}>
                   {name}
-                </Anchor>
+                </Text>
               </Table.Td>
               <Table.Td>{convertMillilitersToLiters(servingSize)}</Table.Td>
               <Table.Td>{unit}</Table.Td>
