@@ -1,10 +1,24 @@
-import { ActionIcon, Anchor, Table } from "@mantine/core";
+import {
+  ActionIcon,
+  Alert,
+  Anchor,
+  Group,
+  Stack,
+  Table,
+  Text,
+} from "@mantine/core";
 import { modals } from "@mantine/modals";
-import { IconPencil } from "@tabler/icons-react";
-import { useQuery } from "@tanstack/react-query";
+import {
+  IconCheck,
+  IconInfoTriangle,
+  IconPencil,
+  IconTrash,
+  IconX,
+} from "@tabler/icons-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { currencyLabels } from "../../../config";
-import { listAvailableItems } from "../../../queries/itemQueries";
+import { listAvailableItems, removeItem } from "../../../queries/itemQueries";
 import { convertCentsToEuros } from "../../../utils/currency";
 import { convertMillilitersToLiters } from "../../../utils/liquids";
 
@@ -15,6 +29,7 @@ const ItemsOverviewTable = () => {
   });
 
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const handleUpdateItem = ({ _id, name }: { _id: string; name: string }) => {
     navigate({
@@ -31,6 +46,36 @@ const ItemsOverviewTable = () => {
       onClose: () => navigate({ search: undefined }),
     });
   };
+
+  const { mutate: deleteItem } = useMutation({
+    mutationFn: removeItem,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["items"] });
+    },
+    onError: (error) => console.log(error),
+  });
+
+  const openConfim = (_id: string, name: string) =>
+    modals.openConfirmModal({
+      title: <Text>{`${name.toUpperCase()} ENTFERNEN`}</Text>,
+      children: (
+        <Stack gap={"lg"}>
+          <Alert
+            title="ACHTUNG"
+            icon={<IconInfoTriangle size={20} />}
+            color="red"
+          >
+            <Text c={"red"}>
+              Diese Aktion kann nicht rückgängig gemacht werden
+            </Text>
+          </Alert>
+        </Stack>
+      ),
+      labels: { cancel: "Abbrechen", confirm: "Bestätigen" },
+      cancelProps: { leftSection: <IconX size={20} />, fullWidth: true },
+      confirmProps: { leftSection: <IconCheck size={20} />, fullWidth: true },
+      onConfirm: () => deleteItem(_id),
+    });
 
   return (
     <Table highlightOnHover>
@@ -81,12 +126,21 @@ const ItemsOverviewTable = () => {
               <Table.Td>{"--"}</Table.Td>
               <Table.Td>{"--"}</Table.Td>
               <Table.Td>
-                <ActionIcon
-                  variant="subtle"
-                  onClick={() => handleUpdateItem({ _id, name })}
-                >
-                  <IconPencil stroke={2} />
-                </ActionIcon>
+                <Group justify="flex-end">
+                  <ActionIcon
+                    variant="light"
+                    onClick={() => handleUpdateItem({ _id, name })}
+                  >
+                    <IconPencil stroke={2} />
+                  </ActionIcon>
+                  <ActionIcon
+                    variant="light"
+                    color="red"
+                    onClick={() => openConfim(_id, name)}
+                  >
+                    <IconTrash stroke={2} />
+                  </ActionIcon>
+                </Group>
               </Table.Td>
             </Table.Tr>
           ),
