@@ -25,6 +25,7 @@ itemRouter.get(
 
 itemRouter.put(
   '/:id',
+  transformValues,
   // allowedRoles([UserRoleEnum.ADMIN]),
   updateItem,
 );

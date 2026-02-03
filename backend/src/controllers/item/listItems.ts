@@ -9,7 +9,24 @@ export const listItems = async (
 ) => {
   try {
     // const items = await Item.find(baseFilter(req));
-    const items = await Item.find({ active: true });
+
+    const items = await Item.aggregate([
+      {
+        $match: { active: true },
+      },
+      {
+        $addFields: {
+          deposit: {
+            $cond: {
+              if: { $eq: ['$deposit', true] },
+              then: 200,
+              else: null,
+            },
+          },
+        },
+      },
+    ]);
+
     res.status(StatusCodes.OK).json(items);
   } catch (error) {
     next(error);

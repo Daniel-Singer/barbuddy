@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
-import { convertCentsToEuros } from "../utils/currency";
 import type { Item, ItemReceive } from "../schemas/zodItem";
+import { convertCentsToEuros } from "../utils/currency";
 
 export type TOrderedItem = Item & {
   count: number;
