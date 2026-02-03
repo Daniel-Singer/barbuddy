@@ -17,7 +17,7 @@ const ItemSchema = z.object({
   servingSize: z.number().nullable(),
   purchase: ItemPriceSchema,
   sell: ItemPriceSchema,
-  deposit: z.number().nullable(),
+  deposit: z.boolean(),
 });
 
 export const ItemCreateSchema = ItemSchema.omit({
@@ -36,7 +36,7 @@ export const ItemReceiveSchema = z.object({
     price: z.number(),
     taxRate: z.number().nullable(),
   }),
-  deposit: z.number().nullable(),
+  deposit: z.boolean(),
 });
 
 export type ItemCreate = z.infer<typeof ItemCreateSchema>;

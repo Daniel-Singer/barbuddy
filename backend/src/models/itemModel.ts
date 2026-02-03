@@ -1,6 +1,5 @@
 import { Schema, model, type InferSchemaType } from 'mongoose';
 import { categorySchema } from './categoryModel';
-import { ItemVariantDocument, itemVariantSchema } from './itemVariantModel';
 
 const itemSchema = new Schema(
   {
@@ -59,8 +58,8 @@ const itemSchema = new Schema(
       },
     },
     deposit: {
-      type: Number,
-      default: null,
+      type: Boolean,
+      default: false,
     },
   },
   {

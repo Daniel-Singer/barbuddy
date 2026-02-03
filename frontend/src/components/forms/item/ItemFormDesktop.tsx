@@ -4,6 +4,7 @@ import {
   NumberInput,
   SimpleGrid,
   Stack,
+  Switch,
   TextInput,
 } from "@mantine/core";
 import { modals } from "@mantine/modals";
@@ -30,12 +31,13 @@ const ItemFormDesktop = () => {
   });
 
   useEffect(() => {
-    if (item) {
+    if (item && search.itemToUpdate) {
       form.setValues(item);
     } else {
       form.reset();
     }
-  }, [item]);
+    return () => form.reset();
+  }, [item, search]);
 
   const { mutate: createItem } = useMutation({
     mutationKey: ["add_item"],
@@ -81,7 +83,7 @@ const ItemFormDesktop = () => {
         price: null,
         taxRate: null,
       },
-      deposit: null,
+      deposit: false,
     },
     validate: {
       name: (value) => (value !== "" && value ? null : "Pflichtfeld"),
@@ -94,7 +96,7 @@ const ItemFormDesktop = () => {
   });
 
   const handleSubmit = (values: ItemCreate, _id: string | undefined) => {
-    if (!_id) {
+    if (!_id || !search.itemToUpdate) {
       createItem(values);
     } else {
       updateExistingItem({ update: values, _id });
@@ -150,13 +152,13 @@ const ItemFormDesktop = () => {
                 label="Steuer %"
               />
             </SimpleGrid>
-            <SimpleGrid cols={2}>
-              <NumberInput
-                {...form.getInputProps("deposit")}
-                label="Bechereinsatz"
-                description="Wird beim Verkauf automatisch hinzugefügt"
-              />
-            </SimpleGrid>
+            <Switch
+              label="Bechereinsatz anwenden"
+              size="md"
+              withThumbIndicator={false}
+              {...form.getInputProps("deposit", { type: "checkbox" })}
+              my={"lg"}
+            />
             <SaveButton>Speichern</SaveButton>
           </Stack>
         </form>

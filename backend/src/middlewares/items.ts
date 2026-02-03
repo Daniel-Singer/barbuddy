@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
-import { litersToMilliliters } from '../util/conversions/liquids';
+import { NextFunction, Request, Response } from 'express';
 import { convertEuroToCents } from '../util/conversions/currency';
+import { litersToMilliliters } from '../util/conversions/liquids';
 
 export const transformValues = async (
   req: Request,
@@ -19,10 +19,6 @@ export const transformValues = async (
         ...req.body.sell,
         price: convertEuroToCents(req.body.sell.price),
       },
-      deposit:
-        req.body.deposit && !isNaN(req.body.deposit)
-          ? convertEuroToCents(req.body.deposit)
-          : null,
     };
     next();
   } catch (error) {

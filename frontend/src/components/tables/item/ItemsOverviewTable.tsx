@@ -1,4 +1,12 @@
-import { ActionIcon, Alert, Group, Stack, Table, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Alert,
+  Group,
+  Stack,
+  Table,
+  Text,
+  ThemeIcon,
+} from "@mantine/core";
 import { modals } from "@mantine/modals";
 import {
   IconCheck,
@@ -109,7 +117,13 @@ const ItemsOverviewTable = () => {
               <Table.Td>{unit}</Table.Td>
               <Table.Td>{`${currencyLabels[currency]} ${convertCentsToEuros(sell.price)}`}</Table.Td>
               <Table.Td>{`${currencyLabels[currency]} ${convertCentsToEuros(purchase.price)}`}</Table.Td>
-              <Table.Td>{`${currencyLabels[currency]} ${convertCentsToEuros(deposit)}`}</Table.Td>
+              <Table.Td>
+                {deposit && (
+                  <ThemeIcon size={"sm"} color="green" variant="light">
+                    <IconCheck size={18} />
+                  </ThemeIcon>
+                )}
+              </Table.Td>
               <Table.Td>{"--"}</Table.Td>
               <Table.Td>{"--"}</Table.Td>
               <Table.Td>
