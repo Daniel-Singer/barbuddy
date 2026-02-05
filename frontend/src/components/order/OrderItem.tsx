@@ -14,8 +14,7 @@ const OrderItem = ({ item }: Props) => {
     <Group p={"xs"} justify="space-between">
       <Group gap={"xs"}>
         <MinusButton onClick={() => removeItemFromOrder(item._id)} />
-        <Text>{count}</Text>
-        <Text>{name}</Text>
+        <Text>{count}</Text>x<Text>{name}</Text>
       </Group>
       <Stack align="flex-end" gap={0}>
         <Text>{`${convertCentsToEuros(total)} €`}</Text>
