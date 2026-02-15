@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { User } from '../../models/userModel';
 import config from '../../config/config';
+import { User } from '../../models/userModel';
 
 export const loginUser = async (
   req: Request,
@@ -60,11 +60,9 @@ export const loginUser = async (
         maxAge: 24 * 60 * 60 * 1000,
       });
       res.status(200).json({
-        user: {
-          _id: user._id,
-          email: user.email,
-          accessToken: accessToken,
-        },
+        _id: user._id,
+        email: user.email,
+        accessToken: accessToken,
       });
     } else {
       res.status(401);

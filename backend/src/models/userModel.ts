@@ -1,5 +1,5 @@
-import { InferSchemaType, Model, model, Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
+import { InferSchemaType, Model, model, Schema } from 'mongoose';
 import { TUser, UserRoleEnum } from '../schema/userSchema';
 
 interface UserMethods {
@@ -42,6 +42,14 @@ const userSchema = new Schema<TUserSchema, UserModel, UserMethods>(
     timestamps: true,
   },
 );
+
+userSchema.pre('save', function () {
+  if (this.isNew || this.isModified('password')) {
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(this.password, salt);
+    this.password = hash;
+  }
+});
 
 userSchema.method('comparePasswords', async function (providedPassword) {
   return await bcrypt.compare(providedPassword, this?.password!);

@@ -3,6 +3,7 @@ import {
   createTheme,
   MultiSelect,
   NumberInput,
+  PasswordInput,
   Select,
   TextInput,
 } from "@mantine/core";
@@ -20,6 +21,11 @@ export const theme = createTheme({
       },
     }),
     NumberInput: NumberInput.extend({
+      defaultProps: {
+        size: "md",
+      },
+    }),
+    PasswordInput: PasswordInput.extend({
       defaultProps: {
         size: "md",
       },

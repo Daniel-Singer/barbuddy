@@ -4,7 +4,7 @@ import CashRegisterPage from "../components/pages/CashRegisterPage";
 export const Route = createFileRoute("/cashregister")({
   beforeLoad: ({ context, location }) => {
     if (!context.auth.isAuthenticated) {
-      throw redirect({ to: "/login", search: location.href });
+      throw redirect({ to: "/login" });
     }
   },
   component: RouteComponent,

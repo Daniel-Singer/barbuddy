@@ -1,5 +1,17 @@
+import { Center } from "@mantine/core";
+import LoginForm from "../forms/login/LoginForm";
+
 const LoginPage = () => {
-  return <div>LoginPage</div>;
+  return (
+    <Center
+      style={{
+        height: "100%",
+        width: "100%",
+      }}
+    >
+      <LoginForm />
+    </Center>
+  );
 };
 
 export default LoginPage;

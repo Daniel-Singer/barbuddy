@@ -25,7 +25,7 @@ export const registerUser = async (
 
     const user = await User.create(req.body);
 
-    res.status(201).json(user);
+    res.sendStatus(200);
   } catch (error) {
     next(error);
   }
