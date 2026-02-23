@@ -19,11 +19,6 @@ class AuthStore {
   }
 
   get isAuthenticated() {
-    const token = localStorage.getItem("authToken");
-
-    if (!!token) {
-      this._accessToken = token;
-    }
     return !!this._accessToken;
   }
 }
