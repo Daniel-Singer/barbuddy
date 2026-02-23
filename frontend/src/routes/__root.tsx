@@ -1,6 +1,6 @@
 import { createRootRouteWithContext } from "@tanstack/react-router";
 import App from "../App";
-import type authStore from "../stores/authStore";
+import { authStore } from "../stores/authStore";
 
 interface UserContext {
   auth: typeof authStore;

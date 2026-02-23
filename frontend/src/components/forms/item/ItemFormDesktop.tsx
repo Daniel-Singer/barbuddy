@@ -83,7 +83,7 @@ const ItemFormDesktop = () => {
         price: null,
         taxRate: null,
       },
-      deposit: false,
+      deposit: 0,
     },
     validate: {
       name: (value) => (value !== "" && value ? null : "Pflichtfeld"),
