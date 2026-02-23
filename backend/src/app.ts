@@ -1,15 +1,17 @@
-import express, { type Express } from 'express';
 import cookieParser from 'cookie-parser';
-import { errorHandler } from './middlewares/errorHandler';
-import connectDB from './config/db';
-import { authRouter } from './routes/authRouter';
+import dotenv from 'dotenv';
+import express, { type Express } from 'express';
 import config from './config/config';
-import { protect } from './middlewares/auth';
-import { stationRouter } from './routes/stationRouter';
-import { orgRouter } from './routes/orgRouter';
+import connectDB from './config/db';
+import { errorHandler } from './middlewares/errorHandler';
+import { authRouter } from './routes/authRouter';
 import { categoryRouter } from './routes/categoryRouter';
-import { itemRouter } from './routes/itemRouter';
 import { depositRouter } from './routes/depositRouter';
+import { itemRouter } from './routes/itemRouter';
+import { orgRouter } from './routes/orgRouter';
+import { stationRouter } from './routes/stationRouter';
+
+dotenv.config();
 
 const app: Express = express();
 
