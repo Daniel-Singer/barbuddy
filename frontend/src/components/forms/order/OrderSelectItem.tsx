@@ -1,7 +1,8 @@
-import { Paper, Stack, Text } from "@mantine/core";
+import { Group, Paper, Stack, Text, ThemeIcon } from "@mantine/core";
 import { orderStore } from "../../../stores/orderStore";
 import { convertCentsToEuros } from "../../../utils/currency";
 
+import { IconGlass } from "@tabler/icons-react";
 import type { ItemReceive } from "../../../schemas/zodItem";
 import styles from "./OrderSelectItem.module.css";
 
@@ -18,9 +19,18 @@ const OrderSelectItem = ({ item }: Props) => {
       onClick={() => addItemToOrder(item)}
       className={styles.item}
     >
-      <Stack align="center" gap={0}>
+      <Stack gap={0}>
+        <Group justify="space-between" p={0}>
+          <ThemeIcon variant="white">
+            <IconGlass size={20} stroke={1.5} />
+          </ThemeIcon>
+          <Text>{`${convertCentsToEuros(item.sell.price)} €`}</Text>
+        </Group>
         <Text size="xl">{item.name}</Text>
-        <Text c={"dimmed"}>{`${convertCentsToEuros(item.sell.price)} €`}</Text>
+        <Text
+          c={"dimmed"}
+          size="xs"
+        >{`Einsatz ${convertCentsToEuros(item.deposit)} €`}</Text>
       </Stack>
     </Paper>
   );

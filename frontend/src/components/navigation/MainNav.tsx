@@ -1,12 +1,7 @@
 import { Burger, Drawer, Group, Stack, UnstyledButton } from "@mantine/core";
 
 import { useDisclosure } from "@mantine/hooks";
-import {
-  IconBuildingWarehouse,
-  IconDashboard,
-  IconHome,
-  IconListDetails,
-} from "@tabler/icons-react";
+import { IconBuildingWarehouse, IconHome } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
 import styles from "./MainNav.module.css";
 
@@ -21,21 +16,21 @@ const navLinks = [
     label: "Kassa",
     icon: IconHome,
   },
-  {
-    href: "/dashboard",
-    label: "Dashboard",
-    icon: IconDashboard,
-  },
+  // {
+  //   href: "/dashboard",
+  //   label: "Dashboard",
+  //   icon: IconDashboard,
+  // },
   {
     href: "/items",
     label: "Artikel",
     icon: IconBuildingWarehouse,
   },
-  {
-    href: "/orders",
-    label: "Bestellungen",
-    icon: IconListDetails,
-  },
+  // {
+  //   href: "/orders",
+  //   label: "Bestellungen",
+  //   icon: IconListDetails,
+  // },
 ];
 
 const MainNav = () => {
