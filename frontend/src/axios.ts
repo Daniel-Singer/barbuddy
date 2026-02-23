@@ -1,8 +1,14 @@
 import axios from "axios";
 
-const accessToken = sessionStorage.getItem("auth_token");
+// axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
-axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+axios.interceptors.request.use((config) => {
+  const accessToken = localStorage.getItem("authToken");
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
+  return config;
+});
 
 export default axios.create({
   headers: {
