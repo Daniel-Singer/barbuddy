@@ -8,6 +8,10 @@ class AuthStore {
 
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true });
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      this._accessToken = token;
+    }
   }
 
   onAuthSuccess(authenticatedUser: AuthenticatedUser) {
@@ -20,6 +24,18 @@ class AuthStore {
 
   get isAuthenticated() {
     return !!this._accessToken;
+  }
+
+  logout() {
+    this._id = null;
+    this._userEmail = null;
+    this._accessToken = null;
+
+    localStorage.removeItem("authToken");
+  }
+
+  get token() {
+    return this._accessToken ?? localStorage.getItem("authToken");
   }
 }
 
