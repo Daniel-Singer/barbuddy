@@ -115,8 +115,8 @@ const ItemsOverviewTable = () => {
               </Table.Td>
               <Table.Td>{convertMillilitersToLiters(servingSize)}</Table.Td>
               <Table.Td>{unit}</Table.Td>
-              <Table.Td>{`${currencyLabels[currency]} ${convertCentsToEuros(sell.price)}`}</Table.Td>
               <Table.Td>{`${currencyLabels[currency]} ${convertCentsToEuros(purchase.price)}`}</Table.Td>
+              <Table.Td>{`${currencyLabels[currency]} ${convertCentsToEuros(sell.price)}`}</Table.Td>
               <Table.Td>
                 {deposit && (
                   <ThemeIcon size={"sm"} color="green" variant="light">
