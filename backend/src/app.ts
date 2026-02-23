@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 import express, { type Express } from 'express';
 import config from './config/config';
 import connectDB from './config/db';
-import { protect } from './middlewares/auth';
 import { errorHandler } from './middlewares/errorHandler';
 import { authRouter } from './routes/authRouter';
 import { categoryRouter } from './routes/categoryRouter';
@@ -36,7 +35,7 @@ declare global {
   }
 }
 
-app.use(protect);
+// app.use(protect);
 
 // protected routes go here
 
